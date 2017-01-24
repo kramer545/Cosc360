@@ -1,0 +1,83 @@
+header, footer{
+ color: white;
+ background-color: #312c32;
+ margin: 0em 4em 0.5em 4em;
+ }
+ 
+h1{
+	 font-family: "Trebuchet MS","Lucida Grande",Tahoma,sans-serif;
+	 font-size: 1.5em;
+}
+ 
+h2 {
+	 font-family: "Trebuchet MS","Lucida Grande",Tahoma,sans-serif;
+	 font-size: 0.75em;
+}
+ 
+h3,nav {
+	 font-family: "Trebuchet MS","Lucida Grande",Tahoma,sans-serif;
+	 font-size: 1.125em;
+}
+
+body {
+	font-family: Georgia,Cambria,"Times New Roman",	serif;
+	font-size: 100%;
+	background-color: #98dafc;
+	margin: 0em 4em 0em 4em;
+}
+
+section {
+	background-color:white;
+	padding:10px;
+}
+
+a:link {
+	font-style:bold;
+	color: #98dafc;
+}
+
+a:visited {
+	color:#daad86;
+}
+
+a:hover {
+	color:#FFFFCC;
+}
+
+span {
+	display: inline-block;
+	font-size:70%;
+	padding-top:12.5px;
+	
+}
+
+.gradient {
+	background-image:url(../images/gray-gradient.png);
+	background-repeat:repeat;
+	height:50px;
+	border-style:solid;
+	border-radius: 0.5em;
+	padding-left:10px;
+	
+}
+
+ 
+ .byline {
+	border-top:1px solid black;
+	color:teal;
+	font-style:italic;
+}
+
+.dashBorder	{
+	border-bottom:1px dotted black;
+}
+
+#lrgPic {
+	position:relative;
+	width: 98%;
+	padding:0.25em; 
+	border-style:solid;
+	border-color:black;
+	border-width: 0.05em;
+}
+
