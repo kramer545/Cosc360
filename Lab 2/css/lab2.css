@@ -18,16 +18,17 @@ h3,nav {
 	 font-family: "Trebuchet MS","Lucida Grande",Tahoma,sans-serif;
 	 font-size: 1.125em;
 }
-
+main{ /*doesnt affect header/footer like body does*/
+	background-color:white;
+	margin: 0em 4em 0em 4em;
+}
 body {
 	font-family: Georgia,Cambria,"Times New Roman",	serif;
 	font-size: 100%;
 	background-color: #98dafc;
-	margin: 0em 4em 0em 4em;
 }
 
 section {
-	background-color:white;
 	padding:10px;
 }
 

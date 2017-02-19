@@ -1,0 +1,44 @@
+table,td,th{
+	margin-left:100px;
+	background-color:white;
+	border: 1px black;
+}
+
+th,td{
+	background-color:lightgrey;
+	padding:0.5em;
+	text-align:center;
+	font-weight:bold;
+}
+
+#today {
+	color:white;
+	background-color:#00827F;
+}
+
+#days{
+	height:50%;
+	line-height:25%;
+}
+
+#today:hover,td:hover {
+	background-color: #9B111E;
+	color:#00827F;
+}
+
+#notHover,#prev,#next{ /*stops the red hover effect on those that aren't dates*/
+	background-color:lightgrey;
+}
+
+#tableHeader{
+		padding:5%;
+		text-align: center;
+		background-color:#A8C0C0;
+}
+
+form{
+	margin-left:15px;
+	padding: 0.4em 0.4em 0.4em 0.4em;
+	background-color:#D2B48C;
+	width:30%;
+}
