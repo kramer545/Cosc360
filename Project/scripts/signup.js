@@ -36,11 +36,7 @@ function FormCheck()
 		document.getElementById("email").className="highlight";
 		submitForm = false;
 	}
-	if(document.getElementById("email").value.substr(document.getElementById("email").value.length-4) != ".com")//check for .com
-	{
-		document.getElementById("email").className="highlight";
-		submitForm = false;
-	}
+	//check for .com at end? what if it's .ca or something?
 	//email autochecks for @ symbol in html
 	if(document.getElementById("password").value == "")
 	{

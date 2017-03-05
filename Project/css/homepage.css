@@ -3,6 +3,7 @@ margin: 0;
 padding: 0;
 text-align: left;
 font: 75% arial, tahoma, "Trebuchet MS", verdana, arial, verdana, sans-serif;
+min-width:625px;
 }
 
 .highlight{
@@ -13,6 +14,32 @@ font: 75% arial, tahoma, "Trebuchet MS", verdana, arial, verdana, sans-serif;
 .matchHighlight{
 	border:1px solid black;
 	background-color:yellow;
+}
+
+table,td,th{
+	background-color:#482D0D;
+	border: 1px black;
+	overflow:auto;
+}
+
+th{
+	background-color:#B66417;
+	padding:0.5em;
+	text-align:center;
+	font-weight:bold;
+	border-bottom:0.25em solid #482D0D;
+	color:white;
+}
+
+td{
+	background-color:white;
+	padding:0.5em;
+	text-align:left;
+	font-weight:bold;
+}
+
+table tr:nth-child(even) td {
+    background: #ccc;
 }
 
 #loginLinks
@@ -30,8 +57,6 @@ font: 75% arial, tahoma, "Trebuchet MS", verdana, arial, verdana, sans-serif;
 
 #container {
 width: 100%;
-\width: 100%;
-w\idth: 99%;
 border: 0px solid #eee;
 margin-left: auto;
 margin-right: auto;
@@ -40,7 +65,6 @@ line-height: 1.5em;
 }
 
 #banner {
-height: 175px;
 padding: 0;
 margin-bottom: 20px;
 background: #fff url(images/image00.jpg) no-repeat;
@@ -105,13 +129,13 @@ background: inherit;
 
 		/* MAIN CONTENT */
 #content {
-padding: 0 20px 0 20px;
-margin-left: 170px;
-margin-right: 170px;
-border-left: 1px dashed #333;
-border-right: 1px dashed #333;
+	width:70%;
+padding: 0 1.25em 0 1.25em;
+margin-left:13em;
+margin-right: 13em;
 color: #555;
 background-color: #fff;
+float:center;
 }
 
 		/* ARTICLES */
@@ -137,26 +161,28 @@ padding: 5px;
 
 		/* LEFT SIDEBAR */
 #sidebar-a {
+height:100%;
 float: left;
-width: 150px;
-\width: 160px;
-w\idth: 150px;
+width:15%;
+min-width:13em;
 margin-right: 5px;
 padding: 0 5px 0 5px;
 color: #666;
 background-color: #fff;
+border-right: 0.01em dashed #333;
 }
 
 		/* RIGHT SIDEBAR */
 #sidebar-b {
+height:100%;
 float: right;
-width: 150px;
-\width: 160px;
-w\idth: 150px;
+width: 15%;
+min-width:13em;
 margin: 0 0 0 5px;
 padding: 0 5px 15px 5px;
 color: #333;
 background-color:#FAF8E9;
+border-left: 0.01em dashed #333;
 }
 
 		/* FOOTER */
@@ -182,12 +208,11 @@ background-color:#476042;
 a {
 text-decoration: none;
 color: #F17C0B;
-background-color: #fff;
+
 }
 a:hover {
 text-decoration:underline;
 color: #666;
-background-color:#fff;
 }
 a img {
 border: 0;
@@ -210,28 +235,28 @@ padding: 5px;
 h1 {
 width: 30%;
 font-size: 200%;
-letter-spacing: 5px;
-color:#6A9662;
+letter-spacing: 1px;
+color:#B66417;
 background: #fff;
 }
 h2 {
 font-size: 130%;
 text-transform: uppercase;
-letter-spacing: 10px;
-color:#476042;
+letter-spacing: 2px;
+color:#B66417;
 background: #fff;
 }
 h3 {
 padding: 5px;
 text-transform: uppercase;
 font-size: 110%;
-color:#fff;
-background: #6A9662;
+color:#482D0D;
+background: #9A7141;
 }
 h4 {
 padding: 5px;
 text-transform: uppercase;
 font-size: 110%;
 color:#fff;
-background: #F17C0B;
+background: #B66417;
 }
