@@ -15,3 +15,4 @@ function setHeights()
 }
 
 window.onload = setHeights;
+window.onresize = setHeights;
