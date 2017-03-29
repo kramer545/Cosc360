@@ -9,9 +9,10 @@
 	$userID;
 	$text;
 	$username;
-	$threadID;
+	$discussionID;
+	$title;
 	
-	$threadID = 1;//REMOVE THIS!
+	$discussionID = 1;//REMOVE THIS!
 	
 	if(isset($_SESSION['userID']))//already logged in
 	{
@@ -31,11 +32,12 @@
 	//already verify with javascript and know it's post, why do this?
 	if($_SERVER["REQUEST_METHOD"]=="POST")
 	{
-		if((isset($_POST["post"])) && (isset($_POST["threadID"])))
+		if((isset($_POST["post"])) && (isset($_POST["discussionID"])) && (isset($_POST["title"])))
 		{
 			echo "both values here";
 			$text = $_POST["post"];
 			$threadID = $_POST["threadID"];
+			$title = $_POST["title"];
 		}
 		else //DO SOMETHING HERE
 		{
@@ -43,7 +45,8 @@
 		}
 	}
 	
-	$text = $_POST["post"];//REMOVE THIS
+	$text = $_POST["post"];//REMOVE THESE
+	$title = $_POST["title"];
 	
 $host = "localhost";
 $database = "db_24604143";
@@ -79,11 +82,20 @@ else
 	else
 		$username = "Anonymous";
 	
-	$sql = "INSERT INTO message (ThreadID, UserID,Post,Username) VALUES (?,?,?,?)";
+	$sql = "INSERT INTO thread(DiscussionID, Title) VALUES (?,?)";
 	if($statement = mysqli_prepare($connection, $sql))
 	{
-		mysqli_stmt_bind_param($statement,'ssss',$threadID,$userID,$text,$username);//change password
+		mysqli_stmt_bind_param($statement,'ss',$discussionID,$title);
 		mysqli_stmt_execute($statement);
+		$threadID = mysqli_insert_id($connection);//get autoincremented id
+		echo " ".$threadID."";
+		//Do new message and attach it to thread
+		$sql = "INSERT INTO message (ThreadID, UserID,Post,Username) VALUES (?,?,?,?)";
+		if($statement = mysqli_prepare($connection, $sql))
+		{
+			mysqli_stmt_bind_param($statement,'ssss',$threadID,$userID,$text,$username);
+			mysqli_stmt_execute($statement);
+		}
 		return;
 	}
 }
