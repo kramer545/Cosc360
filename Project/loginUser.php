@@ -61,7 +61,7 @@ else
 	  if($row['Username'] === $username && $row['Password'] === $userPassword)//user found and validated
 	  {
 		  $_SESSION['userID'] = $row['ID'];//signifies user logged in
-		  header("Location: login.php");
+		  header("Location: homepage.php");
 		 die();
 	  }
     }

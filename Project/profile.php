@@ -75,7 +75,7 @@ session_start();
 		}
 		else
 		{
-			$sql = "SELECT * FROM users;";
+			$sql = "SELECT * FROM user;";
 			$results = mysqli_query($connection, $sql);
 
 			//and fetch requsults
@@ -84,13 +84,12 @@ session_start();
 			  if($row['ID'] === $_SESSION['userID'])
 			  {
 				  echo "<p>Username: ".$row['Username']."<br></p>";
-				  echo "<p>Email: ".$row['Email']." <a href = \"changePassword.php\">Change Email</a><br></p>";
+				  echo "<p>Email: ".$row['Email']." <a href = \"changeEmail.php\">Change Email</a><br></p>";
 				  echo "<p>Create Date: ".$row['CreateDate']."<br></p>";
-				  echo "<p><br><a href = \"changeEmail.php\">Change Email</a><br></p>";
-				  echo '<p>Profile Pic: <img src="data:image/'.$row['ImageType'].';base64,'.base64_encode($row['Image']).' <a href = "changePic.php"><br></p>"/>';
+				  echo "<p><br><a href = \"changePassword.php\">Change Password</a></p>";
+				  echo '<p>Profile Pic: <img src="data:image/'.$row['ImageType'].';base64,'.base64_encode($row['Image']).' <a href = "changePic.php"><br></p>';
 			  }
 			}
-			echo "<p>User not Found</p>";
 		}
     ?>
   </div>

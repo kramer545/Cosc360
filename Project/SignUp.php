@@ -56,7 +56,7 @@
 	</ul>
   </div>
   <div id="content">
-  <form id = "signupForm" method="post" action="makeUser.php" style="overflow:auto">
+  <form id = "signupForm" method="post" action="makeUser.php" style="overflow:auto" enctype="multipart/form-data">
    <fieldset>
     <h2>Sign Up</h2>
     <label>Please Enter Your Username</label><br/>
@@ -70,7 +70,10 @@
 	<br/><br/>
 	<label>Please Enter Your Password Again</label><br/>
 	<input id = "password2" type="password" name="passwordCheck" size="30"/>
-	<br/><br/>
+	<br>
+	<label>Profile Pic Upload:</label><br>
+	<input type="file" name="profilePic" id = "profilePic">
+	<br><br>
 	 <input type="submit"> <input type="reset" value="Reset" onclick = "resetAll()">
   </div>
   <div id="footer"><a href="homepage.php">Home</a> | <a href="contactUs.php">contact</a> | Site By: Ryan Kramer | copyright stuff | filler| footer stuff</div>
