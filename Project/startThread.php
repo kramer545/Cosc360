@@ -26,7 +26,7 @@
 	if($_SERVER["REQUEST_METHOD"]=="GET")
 	{
 		echo "get method";
-		header("Location: login.php");
+		header("Location: homepage.php");
 	}
 	
 	//already verify with javascript and know it's post, why do this?
@@ -95,8 +95,8 @@ else
 		{
 			mysqli_stmt_bind_param($statement,'ssss',$threadID,$userID,$text,$username);
 			mysqli_stmt_execute($statement);
+			header("Location: homepage.php"); //TODO change this
 		}
-		return;
 	}
 }
 ?>
