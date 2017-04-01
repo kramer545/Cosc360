@@ -10,7 +10,7 @@
 <div id="container">
   <div id="banner">
    <?php	
-   session_start();
+   session_start();	
 	if(!isset($_SESSION['userID']))
 	{
 		header("Location: homepage.php");
@@ -18,7 +18,7 @@
 	}
 	else
 	{
-		if($_SESSION['userID'] != "1")
+		if($_SESSION['userID'] != 1)
 		{
 			header("Location: homepage.php");
 			die();
@@ -27,14 +27,15 @@
 	}
 	
 	$messageID;
-	$threadID;
+	$post;
 	
-	if($_SERVER["REQUEST_METHOD"]=="GET")
+	if($_SERVER["REQUEST_METHOD"]=="POST")
 	{
-		if(isset($_GET["messageID"]) && isset($_GET["threadID"]))
+		if((isset($_POST["messageID"]) && isset($_POST["post"])))
 		{
-			$messageID = $_GET["messageID"];
-			$threadID = $_GET['threadID'];
+			$messageID = $_POST["messageID"];
+			$post = $_POST["post"];
+			
 			$host = "localhost";
 			$database = "db_24604143";
 			$user = "root";
@@ -50,25 +51,20 @@
 			}
 			else
 			{
-				$sql = "DELETE FROM message WHERE ID = ?";
+				$sql = "UPDATE message SET Post = ? WHERE ID = ?";
 				if($statement = mysqli_prepare($connection, $sql))
 				{
-					mysqli_stmt_bind_param($statement,'s',$messageID);
+					mysqli_stmt_bind_param($statement,'ss',$post,$messageID);
 					mysqli_stmt_execute($statement);
-					
-					$sql = "UPDATE thread SET NumMessages = NumMessages-1 WHERE ID = ?";
-					if($statement = mysqli_prepare($connection, $sql))
-					{
-						mysqli_stmt_bind_param($statement,'s',$threadID);
-						mysqli_stmt_execute($statement);
-						header("Location: editThread.php?threadID=".$threadID);
-						die();
-				}
+					header("Location: editMessage.php?messageID=".$messageID);
+					die();
 				}
 			}
 		}
 	}
 	?>
+	
+	
 	</table>
   </div>
 </div>

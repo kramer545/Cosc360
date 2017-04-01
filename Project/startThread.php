@@ -10,9 +10,10 @@
 	$text;
 	$username;
 	$discussionID;
+	$threadID;
 	$title;
 	
-	$discussionID = 1;//REMOVE THIS!
+	
 	
 	if(isset($_SESSION['userID']))//already logged in
 	{
@@ -21,6 +22,15 @@
 	else
 	{
 		$userID = 2;//not logged in, anon account
+	}
+	
+	if(isset($_SESSION['discussionID']))
+	{
+		$discussionID = $_SESSION['discussionID'];
+	}
+	else
+	{
+		$discussionID = 1;//default
 	}
 	
 	if($_SERVER["REQUEST_METHOD"]=="GET")
@@ -32,11 +42,10 @@
 	//already verify with javascript and know it's post, why do this?
 	if($_SERVER["REQUEST_METHOD"]=="POST")
 	{
-		if((isset($_POST["post"])) && (isset($_POST["discussionID"])) && (isset($_POST["title"])))
+		if((isset($_POST["post"])) && (isset($_POST["title"])))
 		{
 			echo "both values here";
 			$text = $_POST["post"];
-			$threadID = $_POST["threadID"];
 			$title = $_POST["title"];
 		}
 		else //DO SOMETHING HERE
@@ -44,9 +53,6 @@
 			echo "post or threadID not found";
 		}
 	}
-	
-	$text = $_POST["post"];//REMOVE THESE
-	$title = $_POST["title"];
 	
 $host = "localhost";
 $database = "db_24604143";
@@ -95,7 +101,14 @@ else
 		{
 			mysqli_stmt_bind_param($statement,'ssss',$threadID,$userID,$text,$username);
 			mysqli_stmt_execute($statement);
-			header("Location: homepage.php"); //TODO change this
+			
+			$sql = "UPDATE discussion SET NumThreads = NumThreads+1 WHERE ID=?";
+			if($statement = mysqli_prepare($connection, $sql))
+			{
+				mysqli_stmt_bind_param($statement,'s',$discussionID);
+				mysqli_stmt_execute($statement);
+				header("Location: thread.php?threadID=".$threadID."");
+			}
 		}
 	}
 }

@@ -9,7 +9,10 @@
 	$userID;
 	$text;
 	$username;
-	$threadID;
+	$discussionID;
+	$title;
+	
+	$discussionID = 1;//REMOVE THIS!
 	
 	if(isset($_SESSION['userID']))//already logged in
 	{
@@ -20,29 +23,30 @@
 		$userID = 2;//not logged in, anon account
 	}
 	
-	if(isset ($_SESSION['threadID']))
-	{
-		$threadID = $_SESSION['threadID'];
-	}
-	
 	if($_SERVER["REQUEST_METHOD"]=="GET")
 	{
 		echo "get method";
-		header("Location: login.php");
+		header("Location: homepage.php");
 	}
 	
 	//already verify with javascript and know it's post, why do this?
 	if($_SERVER["REQUEST_METHOD"]=="POST")
 	{
-		if((isset($_POST["post"])))
+		if((isset($_POST["post"])) && (isset($_POST["discussionID"])) && (isset($_POST["title"])))
 		{
+			echo "both values here";
 			$text = $_POST["post"];
+			$threadID = $_POST["threadID"];
+			$title = $_POST["title"];
 		}
 		else //DO SOMETHING HERE
 		{
 			echo "post or threadID not found";
 		}
 	}
+	
+	$text = $_POST["post"];//REMOVE THESE
+	$title = $_POST["title"];
 	
 $host = "localhost";
 $database = "db_24604143";
@@ -65,8 +69,7 @@ else
 	if($userID != 2)
 	{
 			//good connection, so do your thing
-		$sql = "SELECT * FROM user WHERE ID = ".$userID."";
-		echo $userID;
+		$sql = "SELECT * FROM users WHERE ID = ".$userID.";";
 
 		$results = mysqli_query($connection, $sql);
 
@@ -79,18 +82,20 @@ else
 	else
 		$username = "Anonymous";
 	
-	$sql = "INSERT INTO message (ThreadID, UserID,Post,Username) VALUES (?,?,?,?)";
+	$sql = "INSERT INTO thread(DiscussionID, Title) VALUES (?,?)";
 	if($statement = mysqli_prepare($connection, $sql))
 	{
-		mysqli_stmt_bind_param($statement,'ssss',$threadID,$userID,$text,$username);//change password
+		mysqli_stmt_bind_param($statement,'ss',$discussionID,$title);
 		mysqli_stmt_execute($statement);
-		
-		$sql = "UPDATE thread SET NumMessages = NumMessages+1 WHERE ID=?";
+		$threadID = mysqli_insert_id($connection);//get autoincremented id
+		echo " ".$threadID."";
+		//Do new message and attach it to thread
+		$sql = "INSERT INTO message (ThreadID, UserID,Post,Username) VALUES (?,?,?,?)";
 		if($statement = mysqli_prepare($connection, $sql))
 		{
-			mysqli_stmt_bind_param($statement,'s',$threadID);//change password
+			mysqli_stmt_bind_param($statement,'ssss',$threadID,$userID,$text,$username);
 			mysqli_stmt_execute($statement);
-			header("Location: Thread.php");
+			header("Location: homepage.php"); //TODO change this
 		}
 	}
 }

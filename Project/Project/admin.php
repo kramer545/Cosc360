@@ -73,7 +73,7 @@
 	<h4>Search Users</h4>
 	<br>
 	<p>By Username: 
-		<form id = "searchUsername" method="post" action="searchUser.php">
+		<form id = "searchUsername" method="post" action="search.php">
 			<fieldset>
 				<input id = "userSearch" type="text" name="userSearch" size="30"/>
 				<input type="hidden" value="0" name="searchType" id = "searchType" />
@@ -83,9 +83,9 @@
 	</p>
 	<br>
 	<p>By Email: 
-		<form id = "searchEmail" method="post" action="searchUser.php">
+		<form id = "searchEmail" method="post" action="userSearch.php">
 			<fieldset>
-				<input id = "userSearch" type="text" name="userSearch" size="30"/>
+				<input id = "userSearch" type="text" name="search" size="30"/>
 				<input type="hidden" value="1" name="searchType" id = "searchType" />
 				<input type="submit"/>
 			</fieldset>
@@ -93,7 +93,7 @@
 	</p>
 	<br>
 	<p>By Post Title(all users who posted in topic): <!--is this what is meant by search users by topic post? -->
-		<form id = "searchPost" method="post" action="searchUser.php">
+		<form id = "searchPost" method="post" action="search.php">
 			<fieldset>
 				<input id = "userSearch" type="text" name="userSearch" size="30"/>
 				<input type="hidden" value="2" name="searchType" id = "searchType" />

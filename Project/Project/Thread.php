@@ -7,25 +7,30 @@
 <script type="text/javascript" src="scripts/heightMatch.js"></script>
 </head>
 <body>
+<?php 
+	session_start();
+	
+	if($_SERVER["REQUEST_METHOD"]=="GET")
+	{
+		if(isset($_GET["threadID"]))
+		{
+			$_SESSION['threadID'] = $_GET['threadID'];
+		}
+	}
+	
+	if($_SERVER["REQUEST_METHOD"]=="POST")
+	{
+		header("Location: homepage.php");
+	}
+?>
 <div id="container">
   <div id="banner">
    <?php	
-   session_start();
+   
 	if(!isset($_SESSION['userID']))
-	{
-		header("Location: homepage.php");
-		die();
-	}
+		echo "<p id = \"loginLinks\"><a href=\"Login.php\">Login</a> | <a href=\"SignUp.php\">Sign Up</a></p>";
 	else
-	{
-		if($_SESSION['userID'] != 1)
-		{
-			header("Location: homepage.php");
-			die();
-		}
-		else
-			echo "<p id = \"loginLinks\"><a href=\"Profile.php\">Profile</a> | <a href=\"SignOut.php\">Sign Out</a></p>";
-	}
+		echo "<p id = \"loginLinks\"><a href=\"Profile.php\">Profile</a> | <a href=\"SignOut.php\">Sign Out</a></p>";
 	?>
 	<h1><a href = "homepage.php">www.BestDog.com</a></h1>
   </div>
@@ -67,43 +72,55 @@
 	</ul>
   </div>
   <div id="content">
-    <h2>Admin Features</h2>
-    <p>Admin functionality listed below, if you aren't a admin, go away</p>
-    <hr noshade style = "border-width:0.10em">
-	<h4>Search Users</h4>
-	<br>
-	<p>By Username: 
-		<form id = "searchUsername" method="post" action="searchUser.php">
-			<fieldset>
-				<input id = "userSearch" type="text" name="userSearch" size="30"/>
-				<input type="hidden" value="0" name="searchType" id = "searchType" />
-				<input type="submit"/>
-			</fieldset>
-		</form>
-	</p>
-	<br>
-	<p>By Email: 
-		<form id = "searchEmail" method="post" action="searchUser.php">
-			<fieldset>
-				<input id = "userSearch" type="text" name="userSearch" size="30"/>
-				<input type="hidden" value="1" name="searchType" id = "searchType" />
-				<input type="submit"/>
-			</fieldset>
-		</form>
-	</p>
-	<br>
-	<p>By Post Title(all users who posted in topic): <!--is this what is meant by search users by topic post? -->
-		<form id = "searchPost" method="post" action="searchUser.php">
-			<fieldset>
-				<input id = "userSearch" type="text" name="userSearch" size="30"/>
-				<input type="hidden" value="2" name="searchType" id = "searchType" />
-				<input type="submit"/>
-			</fieldset>
-		</form>
-	</p>
-	<br>
-	<p>Use search feature on right sidebar to browse and edit posts, or just find the post and edit it there</p>
+	<table>
+		<?php
+			$host = "localhost";
+			$database = "db_24604143";
+			$user = "root";
+			$password = ""; 
+			
+			$connection = mysqli_connect($host, $user, $password, $database);
+
+			$error = mysqli_connect_error();
+			if($error != null)
+			{
+			  $output = "<p>Unable to connect to database!</p>";
+			  exit($output);
+			}
+			else
+			{
+				$sql = "SELECT * FROM thread WHERE ID = ".$_SESSION['threadID']."";
+
+				$results = mysqli_query($connection, $sql);
+
+				while ($row = mysqli_fetch_assoc($results))//Thread Title
+				{
+				  echo "<caption><h4>".$row['Title']."</h4></caption>";
+				}
+				
+				$sql = "SELECT * FROM message WHERE ThreadID = ".$_SESSION['threadID']."";
+
+				$results = mysqli_query($connection, $sql);
+
+				//and fetch results
+				while ($row = mysqli_fetch_assoc($results))//search all users to see if there are already in database
+				{
+				  echo "<tr><td>".$row['Username']."</td><td>".$row['Post']."</td><td>".$row['CreateDate']."</td></tr>";
+				}
+			}
+		?>
+	</table>
+	<br><br>
+	<form id = "commentForm" method="post" action="submitMessage.php"  style="overflow:auto">
+   <fieldset>
+    <h2>Make a post</h2>
+	<textarea rows = "10" cols="100" name = "post" id = "post"></textarea>
+	<br/><br/>
+	<input type = "submit">
+	 </fieldset>
+	</form>
   </div>
   <div id="footer"><a href="homepage.php">Home</a> | <a href="contactUs.php">contact</a> | Site By: Ryan Kramer | copyright stuff | filler| footer stuff</div>
 </div>
 </body>
+</php>

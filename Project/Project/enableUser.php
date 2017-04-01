@@ -18,7 +18,7 @@
 	}
 	else
 	{
-		if($_SESSION['userID'] != "1")
+		if($_SESSION['userID'] != 1)
 		{
 			header("Location: homepage.php");
 			die();
@@ -26,15 +26,23 @@
 		echo "<p id = \"loginLinks\"><a href=\"Profile.php\">Profile</a> | <a href=\"SignOut.php\">Sign Out</a></p>";
 	}
 	
-	$messageID;
-	$threadID;
-	
-	if($_SERVER["REQUEST_METHOD"]=="GET")
-	{
-		if(isset($_GET["messageID"]) && isset($_GET["threadID"]))
-		{
-			$messageID = $_GET["messageID"];
-			$threadID = $_GET['threadID'];
+			$userID;
+			
+			if($_SERVER["REQUEST_METHOD"]=="GET")
+			{
+				if(isset($_GET["userID"]))
+				{
+					$userID = $_GET["userID"];
+				}
+				else
+					header("Location: admin.php");
+			}
+			
+			if($_SERVER["REQUEST_METHOD"]=="POST")
+			{
+				header("Location: admin.php");
+			}
+			
 			$host = "localhost";
 			$database = "db_24604143";
 			$user = "root";
@@ -50,27 +58,23 @@
 			}
 			else
 			{
-				$sql = "DELETE FROM message WHERE ID = ?";
-				if($statement = mysqli_prepare($connection, $sql))
+				$sql = "SELECT * FROM user WHERE ID= ".$userID."";
+				$sql2;
+
+				$results = mysqli_query($connection, $sql);
+
+				while ($row = mysqli_fetch_assoc($results))//Thread Title
 				{
-					mysqli_stmt_bind_param($statement,'s',$messageID);
-					mysqli_stmt_execute($statement);
-					
-					$sql = "UPDATE thread SET NumMessages = NumMessages-1 WHERE ID = ?";
-					if($statement = mysqli_prepare($connection, $sql))
+					 if($row['Enabled'] == 1)//true, enabled
+						$sql2 = "UPDATE user SET Enabled = 0 WHERE ID = ".$row['ID']."";
+					else
+						$sql2 = "UPDATE user SET Enabled = 1 WHERE ID = ".$row['ID']."";	
+					if($statement = mysqli_prepare($connection, $sql2))
 					{
-						mysqli_stmt_bind_param($statement,'s',$threadID);
 						mysqli_stmt_execute($statement);
-						header("Location: editThread.php?threadID=".$threadID);
+						header("Location: admin.php");
 						die();
-				}
+					}
 				}
 			}
-		}
-	}
-	?>
-	</table>
-  </div>
-</div>
-</body>
-</php>
+		?>

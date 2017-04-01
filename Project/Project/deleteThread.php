@@ -26,15 +26,15 @@
 		echo "<p id = \"loginLinks\"><a href=\"Profile.php\">Profile</a> | <a href=\"SignOut.php\">Sign Out</a></p>";
 	}
 	
-	$messageID;
 	$threadID;
+	$post;
 	
 	if($_SERVER["REQUEST_METHOD"]=="GET")
 	{
-		if(isset($_GET["messageID"]) && isset($_GET["threadID"]))
+		if(isset($_GET["threadID"]))
 		{
-			$messageID = $_GET["messageID"];
-			$threadID = $_GET['threadID'];
+			$threadID = $_GET["threadID"];
+			$post = $_GET["post"];
 			$host = "localhost";
 			$database = "db_24604143";
 			$user = "root";
@@ -50,20 +50,21 @@
 			}
 			else
 			{
-				$sql = "DELETE FROM message WHERE ID = ?";
+				$sql = "DELETE FROM message WHERE threadID=?";//have to delete all message first (thanks FK's)
 				if($statement = mysqli_prepare($connection, $sql))
 				{
-					mysqli_stmt_bind_param($statement,'s',$messageID);
+					mysqli_stmt_bind_param($statement,'s',$threadID);
+					mysqli_stmt_execute($statement);
+				}
+				
+				$sql = "DELETE FROM thread WHERE ID=?";//delete thread itself
+				if($statement = mysqli_prepare($connection, $sql))
+				{
+					mysqli_stmt_bind_param($statement,'s',$threadID);
 					mysqli_stmt_execute($statement);
 					
-					$sql = "UPDATE thread SET NumMessages = NumMessages-1 WHERE ID = ?";
-					if($statement = mysqli_prepare($connection, $sql))
-					{
-						mysqli_stmt_bind_param($statement,'s',$threadID);
-						mysqli_stmt_execute($statement);
-						header("Location: editThread.php?threadID=".$threadID);
-						die();
-				}
+					echo "<form id = \"myForm\" action = \"search.php\" method = \"post\"><input type = \"hidden\" value = ".$post." id = \"search\" name = \"search\"></form>";
+					echo " <script type=\"text/javascript\">var e = document.getElementById('myForm'); e.action='search.php'; e.submit();</script>";
 				}
 			}
 		}

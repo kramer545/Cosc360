@@ -115,7 +115,7 @@
 
 					while ($row = mysqli_fetch_assoc($results))//Thread Title
 					{
-						if (strpos($row['Title'], $searchTerm) !== false)
+						 if (strpos(strtolower($row['Title']), strtolower($searchTerm)) !== false) 
 						{
 							$sql2 = "SELECT * FROM message WHERE threadID = ".$row['ID']."";
 
@@ -123,29 +123,35 @@
 
 							while ($row2 = mysqli_fetch_assoc($results2))//Thread Title
 							{
-								$sql3 = "SELECT * FROM user WHERE ID = ".$row2['ID']."";
+								$sql3 = "SELECT * FROM user WHERE ID = ".$row2['UserID']."";
 								$results3 = mysqli_query($connection, $sql3);
 
 								while ($row3 = mysqli_fetch_assoc($results3))//Thread Title
 								{
-									echo "<tr><td>".$row3['Username']."</td><td><a href = \"enableUser.php?userID=".$row3['UserID']."\">".$row3['Enabled']."</a></td></tr>";
+									echo "<tr><td>".$row3['Username']."</td><td><a href = \"enableUser.php?userID=".$row3['ID']."\">".$row3['Enabled']."</a></td></tr>";
 								}
 							}
 						}
 					}
 				}
 				else
-				{	
-					if($searchType === "0")//username
-						$sql = "SELECT * FROM user WHERE Username = ".$searchTerm."";
-					else if ($searchType === "1")//email
-						$sql = "SELECT * FROM user WHERE Email = ".$searchTerm."";
+				{
+					$sql = "SELECT * FROM user";
 
 					$results = mysqli_query($connection, $sql);
 
 					while ($row = mysqli_fetch_assoc($results))//Thread Title
 					{
-					  echo "<tr><td>".$row['Username']."</td><td><a href = \"enableUser.php?userID=".$row['UserID']."\">".$row['Enabled']."</a></td></tr>";
+						if($searchType === "0")//username
+						{
+						 if (strpos(strtolower($row['Username']), strtolower($searchTerm)) !== false) 
+							echo "<tr><td>".$row['Username']."</td><td><a href = \"enableUser.php?userID=".$row['ID']."\">".$row['Enabled']."</a></td></tr>";
+						}
+						else if ($searchType === "1")//email
+						{
+							if (strpos(strtolower($row['Email']), strtolower($searchTerm)) !== false) 
+								echo "<tr><td>".$row['Username']."</td><td><a href = \"enableUser.php?userID=".$row['ID']."\">".$row['Enabled']."</a></td></tr>";
+						}
 					}
 				}
 			}

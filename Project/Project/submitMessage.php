@@ -84,14 +84,7 @@ else
 	{
 		mysqli_stmt_bind_param($statement,'ssss',$threadID,$userID,$text,$username);//change password
 		mysqli_stmt_execute($statement);
-		
-		$sql = "UPDATE thread SET NumMessages = NumMessages+1 WHERE ID=?";
-		if($statement = mysqli_prepare($connection, $sql))
-		{
-			mysqli_stmt_bind_param($statement,'s',$threadID);//change password
-			mysqli_stmt_execute($statement);
-			header("Location: Thread.php");
-		}
+		header("Location: Thread.php");
 	}
 }
 ?>

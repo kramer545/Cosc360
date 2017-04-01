@@ -9,23 +9,12 @@
 <body>
 <div id="container">
   <div id="banner">
-   <?php	
-   session_start();
+  <?php	
+  session_start();
 	if(!isset($_SESSION['userID']))
-	{
-		header("Location: homepage.php");
-		die();
-	}
+		echo "<p id = \"loginLinks\"><a href=\"Login.php\">Login</a> | <a href=\"SignUp.php\">Sign Up</a></p>";
 	else
-	{
-		if($_SESSION['userID'] != 1)
-		{
-			header("Location: homepage.php");
-			die();
-		}
-		else
-			echo "<p id = \"loginLinks\"><a href=\"Profile.php\">Profile</a> | <a href=\"SignOut.php\">Sign Out</a></p>";
-	}
+		echo "<p id = \"loginLinks\"><a href=\"Profile.php\">Profile</a> | <a href=\"SignOut.php\">Sign Out</a></p>";
 	?>
 	<h1><a href = "homepage.php">www.BestDog.com</a></h1>
   </div>
@@ -67,43 +56,12 @@
 	</ul>
   </div>
   <div id="content">
-    <h2>Admin Features</h2>
-    <p>Admin functionality listed below, if you aren't a admin, go away</p>
-    <hr noshade style = "border-width:0.10em">
-	<h4>Search Users</h4>
-	<br>
-	<p>By Username: 
-		<form id = "searchUsername" method="post" action="searchUser.php">
-			<fieldset>
-				<input id = "userSearch" type="text" name="userSearch" size="30"/>
-				<input type="hidden" value="0" name="searchType" id = "searchType" />
-				<input type="submit"/>
-			</fieldset>
-		</form>
-	</p>
-	<br>
-	<p>By Email: 
-		<form id = "searchEmail" method="post" action="searchUser.php">
-			<fieldset>
-				<input id = "userSearch" type="text" name="userSearch" size="30"/>
-				<input type="hidden" value="1" name="searchType" id = "searchType" />
-				<input type="submit"/>
-			</fieldset>
-		</form>
-	</p>
-	<br>
-	<p>By Post Title(all users who posted in topic): <!--is this what is meant by search users by topic post? -->
-		<form id = "searchPost" method="post" action="searchUser.php">
-			<fieldset>
-				<input id = "userSearch" type="text" name="userSearch" size="30"/>
-				<input type="hidden" value="2" name="searchType" id = "searchType" />
-				<input type="submit"/>
-			</fieldset>
-		</form>
-	</p>
-	<br>
-	<p>Use search feature on right sidebar to browse and edit posts, or just find the post and edit it there</p>
+    <h2>Introduction</h2>
+    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Suspendisse a tortor. Pellentesque sollicitudin, ante nec posuere tempus, arcu lectus vehicula mi, ac rhoncus lorem turpis sed sapien. 
+	Pellentesque egestas.Pellentesque sollicitudin, ante nec posuere tempus, arcu lectus vehicula mi, ac rhoncus lorem turpis sed sapien. Pellentesque egestas. ac rhoncus lorem turpis sed sapien. 
+	Pellentesque egestas.ac rhoncus lorem turpis sed sapien</p>
   </div>
   <div id="footer"><a href="homepage.php">Home</a> | <a href="contactUs.php">contact</a> | Site By: Ryan Kramer | copyright stuff | filler| footer stuff</div>
 </div>
 </body>
+</php>
