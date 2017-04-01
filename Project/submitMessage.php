@@ -44,10 +44,10 @@
 		}
 	}
 	
-$host = "localhost";
-$database = "db_24604143";
-$user = "root";
-$password = ""; 
+$host = "cosc360.ok.ubc.ca";
+			$database = "db_24604143";
+			$user = "24604143";
+			$password = "24604143";  
 
 
 

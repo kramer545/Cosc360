@@ -14,7 +14,12 @@
 	if(!isset($_SESSION['userID']))
 		echo "<p id = \"loginLinks\"><a href=\"Login.php\">Login</a> | <a href=\"SignUp.php\">Sign Up</a></p>";
 	else
-		echo "<p id = \"loginLinks\"><a href=\"Profile.php\">Profile</a> | <a href=\"SignOut.php\">Sign Out</a></p>";
+	{
+		echo "<p id = \"loginLinks\">";
+		if($_SESSION['userID'] == "1")
+			echo "<a href=\"admin.php\">Admin</a> |";
+		echo "<a href=\"Profile.php\">Profile</a> | <a href=\"SignOut.php\">Sign Out</a></p>";
+	}
 	?>
 	<h1><a href = "homepage.php">www.BestDog.com</a></h1>
   </div>

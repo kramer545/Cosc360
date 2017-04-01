@@ -30,10 +30,10 @@
 			$username = $_POST["username"];
 			$userPassword = $_POST["password"];
 			
-			$host = "localhost";
+			$host = "cosc360.ok.ubc.ca";
 			$database = "db_24604143";
-			$user = "root";
-			$password = ""; 
+			$user = "24604143";
+			$password = "24604143"; 
 
 
 

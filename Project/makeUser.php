@@ -5,8 +5,8 @@
 
 <?php
 	session_start();
-
 	
+	$userID;
 	$username;
 	$userPassword;
 	$email;
@@ -65,15 +65,12 @@
 		}
 	}
 	
-$host = "localhost";
-$database = "db_24604143";
-$user = "root";
-$password = ""; 
-
-
+$host = "cosc360.ok.ubc.ca";
+			$database = "db_24604143";
+			$user = "24604143";
+			$password = "24604143"; 
 
 $connection = mysqli_connect($host, $user, $password, $database);
-
 $error = mysqli_connect_error();
 if($error != null)
 {
@@ -84,15 +81,13 @@ else
 {
 		$imagedata = file_get_contents($_FILES["profilePic"]["tmp_name"]);
 		//store the contents of the files in memory in preparation for upload
-		$sql = "INSERT INTO user (Username, Email,Password,ImageType,Image) VALUES (?,?,?,?,?)";
+		$sql = "INSERT INTO user (Username, Email, Password, ImageType, Image) VALUES (?,?,?,?,?)";
 		 // create a new statement to insert the image into the table. Recall
 		// that the ? is a placeholder to variable data.
 		$stmt = mysqli_stmt_init($connection); //init prepared statement object
-
 		mysqli_stmt_prepare($stmt, $sql); // register the query
-
 		$null = $imagedata;
-		mysqli_stmt_bind_param($stmt, "ssssb", $username,$email,$userPassword, $imageFileType, $null);
+		mysqli_stmt_bind_param($stmt, "ssssb", $username, $email, $userPassword, $imageFileType, $null);
 		// bind the variable data into the prepared statement. You could replace
 		// $null with $data here and it also works. You can review the details
 		// of this function on php.net. The second argument defines the type of
@@ -101,17 +96,26 @@ else
 		// Notice that the parametner $imageFileType (which you created previously)
 		// is also stored in the table. This is important as the file type is
 		// needed when the file is retrieved from the database.
-
 		mysqli_stmt_send_long_data($stmt, 2, $imagedata);
 		// This sends the binary data to the third variable location in the
 		// prepared statement (starting from 0).
 		$result = mysqli_stmt_execute($stmt) or die(mysqli_stmt_error($stmt));
+		$userID = mysqli_insert_id($connection);//get autoincremented id
 		// run the statement
+		mysqli_stmt_close($stmt); // and dispose of the statement.
 
-		mysqli_stmt_close($stmt); // and dispose of the statement. 
+		//So for some reason statement above fills password field with garbage, so manually reset it here
+		$sql = "UPDATE user SET Password=? WHERE ID=?";
+		if($statement = mysqli_prepare($connection, $sql))
+		{
+			mysqli_stmt_bind_param($statement,'ss',$userPassword,$userID);
+			mysqli_stmt_execute($statement);
+			
+		}
 		
 		//header("Location: homepage.php");
 		//die();
 }
+
 ?>
 </html>

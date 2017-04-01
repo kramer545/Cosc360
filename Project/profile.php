@@ -60,10 +60,10 @@ session_start();
   <div id="content">
     <h2>Profile</h2>
 	<?php
-		$host = "localhost";
-		$database = "db_24604143";
-		$user = "root";
-		$password = ""; 
+		$host = "cosc360.ok.ubc.ca";
+			$database = "db_24604143";
+			$user = "24604143";
+			$password = "24604143";  
 
 		$connection = mysqli_connect($host, $user, $password, $database);
 

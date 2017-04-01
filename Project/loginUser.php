@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html>
 
-<p>Here are some results:</p>
-
 <?php
 	session_start();
 
@@ -32,10 +30,10 @@
 		}
 	}
 	
-$host = "localhost";
-$database = "db_24604143";
-$user = "root";
-$password = ""; 
+$host = "cosc360.ok.ubc.ca";
+			$database = "db_24604143";
+			$user = "24604143";
+			$password = "24604143"; 
 
 
 
@@ -65,6 +63,9 @@ else
 		 die();
 	  }
     }
+	echo "shit failed";
+	//header("Location: homepage.php");//loggin failed
+	//die();
 	
 }
 ?>
