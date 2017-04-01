@@ -1,0 +1,18 @@
+admin account
+-Username: Admin
+-Password: admin
+
+Features Implemented:
+-admin can edit and delete posts and delete entire threads
+-admin can enable or disable users, but since I dont know what that entails, it just flips a variable and does nothing
+-admin can search users via username,email or posts they posted in, search is general enough to not need to be exact
+-anon users are users not logged in, but can still browse,read,leave posts and make threads
+-user can make account w/ username,email,password and a picture, usernames/emails are not exclusive and I think the pictures are broken because I am locked out of the folder with permissions, but it's too late to bug the teacher about it again, so hope you understand.
+-after making a account they can go to the login screen (not logged in automatically) and log in
+-passwords NOT using MD5 right now since MD5s in diffrent files are giving me diffrent hashs for the same value, making password checks impossible
+-logged in users can view there profile, which looks ugly, but whatever, they can change they're email and password from that page
+-stuff is posted on site (thanks a bunch TA!)
+-one thing to note: sidebar links are likely broken since I am too tired to change them right now
+-I think thats everything
+-It's not, anyone can use the search bar to the right to view topics with the search term somewhere in the topic title (case insensitive), but admin can also edit and delete directly from search page
+-OK now I think I'm done

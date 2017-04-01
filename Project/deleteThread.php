@@ -55,10 +55,28 @@
 			}
 			else
 			{
+				$discussionID;
+				$sql = "SELECT * thread WHERE ID=?";
+
+				$results = mysqli_query($connection, $sql);
+
+				while ($row = mysqli_fetch_assoc($results))
+				{
+				  $discussionID = $row['DiscussionID'];
+				}
+				
 				$sql = "DELETE FROM message WHERE threadID=?";//have to delete all message first (thanks FK's)
 				if($statement = mysqli_prepare($connection, $sql))
 				{
 					mysqli_stmt_bind_param($statement,'s',$threadID);
+					mysqli_stmt_execute($statement);
+				}
+			
+				
+				$sql = "UPDATE discussion SET NumThreads = NumThreads-1 WHERE ID=?";//delete thread itself
+				if($statement = mysqli_prepare($connection, $sql))
+				{
+					mysqli_stmt_bind_param($statement,'s',$discussionID);
 					mysqli_stmt_execute($statement);
 				}
 				

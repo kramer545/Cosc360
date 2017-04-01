@@ -113,8 +113,8 @@ else
 			
 		}
 		
-		//header("Location: homepage.php");
-		//die();
+		header("Location: homepage.php");
+		die();
 }
 
 ?>

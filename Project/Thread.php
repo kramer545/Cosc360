@@ -78,11 +78,14 @@
   </div>
   <div id="content">
 	<table>
+		
 		<?php
 			$host = "cosc360.ok.ubc.ca";
 			$database = "db_24604143";
 			$user = "24604143";
 			$password = "24604143"; 
+			
+			echo "<tr><th>User</th><th>Message</th><th>Post Date</th></tr>";
 			
 			$connection = mysqli_connect($host, $user, $password, $database);
 

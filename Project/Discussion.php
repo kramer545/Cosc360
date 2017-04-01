@@ -110,7 +110,13 @@
 				//and fetch results
 				while ($row = mysqli_fetch_assoc($results))//search all users to see if there are already in database
 				{
-				  echo "<tr><td><a href=\"Thread.php?threadID=".$row['ID']."\">".$row['Title']."</a></td><td>".$row['NumMessages']."</td><td>".$row['LastUpdate']."</td></tr>";
+				  echo "<tr><td><a href=\"Thread.php?threadID=".$row['ID']."\">".$row['Title']."</a></td><td>".$row['NumMessages']."</td><td>".$row['LastUpdate']."</td>";
+						if(isset($_SESSION['userID']))
+						{
+							if($_SESSION['userID'] === "1")
+								echo "<td><a href=\"editThread.php?threadID=".$row['ID']."\">Edit</a></td><td><a href=\"deleteThread.php?threadID=".$row['ID']."&post=".$searchTerm."\">Delete</a></td>";
+						}
+						echo "</tr>";
 				}
 			}
 		?>

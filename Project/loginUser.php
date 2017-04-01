@@ -63,9 +63,7 @@ else
 		 die();
 	  }
     }
-	echo "shit failed";
-	//header("Location: homepage.php");//loggin failed
-	//die();
+	echo "<p>Login Failed <a href=\"Login.php\">Go Back</a></p>";
 	
 }
 ?>

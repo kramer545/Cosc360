@@ -75,7 +75,7 @@ else
 	if($userID != 2)
 	{
 			//good connection, so do your thing
-		$sql = "SELECT * FROM users WHERE ID = ".$userID.";";
+		$sql = "SELECT * FROM user WHERE ID = ".$userID.";";
 
 		$results = mysqli_query($connection, $sql);
 
@@ -107,7 +107,7 @@ else
 			{
 				mysqli_stmt_bind_param($statement,'s',$discussionID);
 				mysqli_stmt_execute($statement);
-				header("Location: thread.php?threadID=".$threadID."");
+				header("Location: Thread.php?threadID=".$threadID."");
 			}
 		}
 	}
