@@ -5,6 +5,21 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link href="css/homepage.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="scripts/heightMatch.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script type="text/javascript">
+		
+			function getMessages() {
+			  var results = $.post("ajaxThread.php");
+			  results.done(function(data) {
+				  console.log(data);
+				 document.getElementById("threadTable").innerHTML = data;
+				});
+				//results.fail(function(jqXHR) {console.log("Error: " + jqXHR.status);});
+				results.always(function() {console.log("done");});
+			    setTimeout(getMessages, 1000);//1 sec after last fulfilled request, go again
+			  };
+		window.onload = getMessages;
+		</script>
 </head>
 <body>
 <?php 
@@ -77,46 +92,8 @@
 	</ul>
   </div>
   <div id="content">
-	<table>
+	<table id = "threadTable">
 		
-		<?php
-			$host = "cosc360.ok.ubc.ca";
-			$database = "db_24604143";
-			$user = "24604143";
-			$password = "24604143"; 
-			
-			echo "<tr><th>User</th><th>Message</th><th>Post Date</th></tr>";
-			
-			$connection = mysqli_connect($host, $user, $password, $database);
-
-			$error = mysqli_connect_error();
-			if($error != null)
-			{
-			  $output = "<p>Unable to connect to database!</p>";
-			  exit($output);
-			}
-			else
-			{
-				$sql = "SELECT * FROM thread WHERE ID = ".$_SESSION['threadID']."";
-
-				$results = mysqli_query($connection, $sql);
-
-				while ($row = mysqli_fetch_assoc($results))//Thread Title
-				{
-				  echo "<caption><h4>".$row['Title']."</h4></caption>";
-				}
-				
-				$sql = "SELECT * FROM message WHERE ThreadID = ".$_SESSION['threadID']."";
-
-				$results = mysqli_query($connection, $sql);
-
-				//and fetch results
-				while ($row = mysqli_fetch_assoc($results))//search all users to see if there are already in database
-				{
-				  echo "<tr><td>".$row['Username']."</td><td>".$row['Post']."</td><td>".$row['CreateDate']."</td></tr>";
-				}
-			}
-		?>
 	</table>
 	<br><br>
 	<form id = "commentForm" method="post" action="submitMessage.php"  style="overflow:auto">

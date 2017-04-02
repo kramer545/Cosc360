@@ -63,7 +63,8 @@
   <div id="content">
     <h2>Search</h2>
     <hr noshade style = "border-width:0.10em">
-	<?php 
+	<div>
+		<?php 
 	
 	$searchTerm;
 	
@@ -116,13 +117,12 @@
 						echo "</tr>";
 					}
 				}
+				echo "</table>";
 			}
 		}
 	}
 	?>
-	
-	
-	</table>
+	</div>
   </div>
  <div id="footer"><a href="homepage.php">Home</a> | <a href="contactUs.php">contact</a> | Site By: Ryan Kramer | copyright stuff | filler| footer stuff</div>
 </div>

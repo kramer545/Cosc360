@@ -5,6 +5,21 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link href="css/homepage.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="scripts/heightMatch.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script type="text/javascript">
+		
+			function getThreads() {
+			  var results = $.post("ajaxDiscussion.php");
+			  results.done(function(data) {
+				  console.log(data);
+				 document.getElementById("threadTable").innerHTML = data;
+				});
+				//results.fail(function(jqXHR) {console.log("Error: " + jqXHR.status);});
+				results.always(function() {console.log("done");});
+			    setTimeout(getThreads, 1000);//1 sec after last fulfilled request, go again
+			  };
+		window.onload = getThreads;
+		</script>
 </head>
 <body>
 <?php 
@@ -82,44 +97,8 @@
     <p>Welcome to BestDog.com, the home of the best discussions about the best dog ever! Feel free to browse through the categories below and to the left, or search specific keywords to the right. 
 	To track discussions and get more out of the experiance, feel free to sign up and become a member, thanks and enjoy your visit!</p>
     <hr noshade style = "border-width:0.10em">
-	<table style="overflow:auto">
-		<caption><h4>General Discussion</h4></caption>
-		<tr>
-			<th>Thread Title</th><th>Msgs</th><th>Last Post</th>
-		</tr>
-		<?php
-			$host = "cosc360.ok.ubc.ca";
-			$database = "db_24604143";
-			$user = "24604143";
-			$password = "24604143"; 
-			
-			$connection = mysqli_connect($host, $user, $password, $database);
-
-			$error = mysqli_connect_error();
-			if($error != null)
-			{
-			  $output = "<p>Unable to connect to database!</p>";
-			  exit($output);
-			}
-			else
-			{
-				$sql = "SELECT * FROM thread WHERE discussionID = ".$_SESSION['discussionID']."";
-
-				$results = mysqli_query($connection, $sql);
-
-				//and fetch results
-				while ($row = mysqli_fetch_assoc($results))//search all users to see if there are already in database
-				{
-				  echo "<tr><td><a href=\"Thread.php?threadID=".$row['ID']."\">".$row['Title']."</a></td><td>".$row['NumMessages']."</td><td>".$row['LastUpdate']."</td>";
-						if(isset($_SESSION['userID']))
-						{
-							if($_SESSION['userID'] === "1")
-								echo "<td><a href=\"editThread.php?threadID=".$row['ID']."\">Edit</a></td><td><a href=\"deleteThread.php?threadID=".$row['ID']."&post=".$searchTerm."\">Delete</a></td>";
-						}
-						echo "</tr>";
-				}
-			}
-		?>
+	<table style="overflow:auto" id="threadTable">
+		
 	</table>
 	<br><br>
 	<button><a href = "newThread.php">Make Thread</a></button>
