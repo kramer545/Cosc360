@@ -79,10 +79,10 @@ else
 	else
 		$username = "Anonymous";
 	
-	$sql = "INSERT INTO message (ThreadID, UserID,Post,Username) VALUES (?,?,?,?)";
+	$sql = "INSERT INTO message (ThreadID, UserID,Post,Username,CreateDateDay) VALUES (?,?,?,?,?)";
 	if($statement = mysqli_prepare($connection, $sql))
 	{
-		mysqli_stmt_bind_param($statement,'ssss',$threadID,$userID,$text,$username);//change password
+		mysqli_stmt_bind_param($statement,'sssss',$threadID,$userID,$text,$username,date("Y-m-d"));//change password
 		mysqli_stmt_execute($statement);
 		
 		$sql = "UPDATE thread SET NumMessages = NumMessages+1 WHERE ID=?";

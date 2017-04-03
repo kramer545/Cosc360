@@ -1,0 +1,3 @@
+-Ajax functionality on threads/discussions
+-Graph showing number of posts over the week (in admin)
+-Tracking user comments (via profile)

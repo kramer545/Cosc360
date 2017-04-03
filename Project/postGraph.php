@@ -5,6 +5,71 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link href="css/homepage.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="scripts/heightMatch.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+		google.charts.load("current", {packages:['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ["Element", "Density", { role: "style" } ],
+		<?php
+			$host = "cosc360.ok.ubc.ca";
+			$database = "db_24604143";
+			$user = "24604143";
+			$password = "24604143"; 
+			
+			$days = ['Sunday','Monday','Tuesday','Wensday','Thursday','Friday','Saturday'];
+			$currDay = 0;
+			$date = date("Y-m-d", strtotime('sunday last week'));//This may break since on sunday it shows NEXT sunday, test monday to see if I should do - 1 week
+			
+			
+			$connection = mysqli_connect($host, $user, $password, $database);
+
+			$error = mysqli_connect_error();
+			if($error != null)
+			{
+			  $output = "<p>Unable to connect to database!</p>";
+			  exit($output);
+			}
+			else
+			{
+				for($x = 0;$x<7;$x++)
+				{
+					$sql = "SELECT COUNT(ID) AS totalMsgs FROM message WHERE DATE(CreateDateDay) = DATE('".$date."');";
+
+					$results = mysqli_query($connection, $sql);
+
+					while ($row = mysqli_fetch_assoc($results))//Thread Title
+					{
+					  echo "[\"".$days[$x]."\", ".$row['totalMsgs'].", \"blue\"]";
+					  if($x !== 6)
+						  echo ",";
+					}
+					$date = date('Y-m-d', strtotime($date . ' +1 day'));
+				}
+			}
+		?>
+      ]);
+
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+                       { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" },
+                       2]);
+
+      var options = {
+        title: "Number of Posts per day in a week",
+        width: 500,
+        height: 300,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+      var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+      chart.draw(view, options);
+  }
+</script>
 </head>
 <body>
 <div id="container">
@@ -72,44 +137,12 @@
 	</ul>
   </div>
   <div id="content">
-    <h2>Admin Features</h2>
-    <p>Admin functionality listed below, if you aren't a admin, go away</p>
-	 <hr noshade style = "border-width:0.10em">
-	<p><a href = "postGraph.php">Post Graph</a></p>
+    <h2>Post's Graph</h2>
+    <p>Number of posts in the week</p>
     <hr noshade style = "border-width:0.10em">
-	<h4>Search Users</h4>
-	<br>
-	<p>By Username: 
-		<form id = "searchUsername" method="post" action="searchUser.php">
-			<fieldset>
-				<input id = "userSearch" type="text" name="userSearch" size="30"/>
-				<input type="hidden" value="0" name="searchType" id = "searchType" />
-				<input type="submit"/>
-			</fieldset>
-		</form>
-	</p>
-	<br>
-	<p>By Email: 
-		<form id = "searchEmail" method="post" action="searchUser.php">
-			<fieldset>
-				<input id = "userSearch" type="text" name="userSearch" size="30"/>
-				<input type="hidden" value="1" name="searchType" id = "searchType" />
-				<input type="submit"/>
-			</fieldset>
-		</form>
-	</p>
-	<br>
-	<p>By Post Title(all users who posted in topic): <!--is this what is meant by search users by topic post? -->
-		<form id = "searchPost" method="post" action="searchUser.php">
-			<fieldset>
-				<input id = "userSearch" type="text" name="userSearch" size="30"/>
-				<input type="hidden" value="2" name="searchType" id = "searchType" />
-				<input type="submit"/>
-			</fieldset>
-		</form>
-	</p>
-	<br>
-	<p>Use search feature on right sidebar to browse and edit posts, or just find the post and edit it there</p>
+		<div id="columnchart_values" style="margin-left:50px">
+		
+		</div>
   </div>
   <div id="footer"><a href="homepage.php">Home</a> | <a href="contactUs.php">contact</a> | Site By: Ryan Kramer | copyright stuff | filler| footer stuff</div>
 </div>

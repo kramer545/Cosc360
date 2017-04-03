@@ -96,10 +96,10 @@ else
 		$threadID = mysqli_insert_id($connection);//get autoincremented id
 		echo " ".$threadID."";
 		//Do new message and attach it to thread
-		$sql = "INSERT INTO message (ThreadID, UserID,Post,Username) VALUES (?,?,?,?)";
+		$sql = "INSERT INTO message (ThreadID, UserID,Post,Username,CreateDateDay) VALUES (?,?,?,?,?)";
 		if($statement = mysqli_prepare($connection, $sql))
 		{
-			mysqli_stmt_bind_param($statement,'ssss',$threadID,$userID,$text,$username);
+			mysqli_stmt_bind_param($statement,'sssss',$threadID,$userID,$text,$username,date("Y-m-d"));
 			mysqli_stmt_execute($statement);
 			
 			$sql = "UPDATE discussion SET NumThreads = NumThreads+1 WHERE ID=?";
